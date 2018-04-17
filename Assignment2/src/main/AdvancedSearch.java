@@ -1,6 +1,5 @@
 package main;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class AdvancedSearch {
 	@DataProvider(name="test1")
 	public static Object[][] AdvancedSearchDataProvider()
 	{
-		return new Object[][] {{"Computer Graphics","Donald Hearn & Pauline Baker"},{"Computer","Donald Hearn"},{"computer",""},{"","Donald Hearn & Pauline Baker"},{"",""}};
+		return new Object[][] {{"computer graphics","donald hearn & pauline baker"},{"computer","donald hearn"},{"computer",""},{"","donald hearn & pauline baker"},{"",""}};
 	}
 	@Test(dataProvider="test1")
 	public void AdvancedSearchTest(String title,String author) {
@@ -59,12 +58,11 @@ public class AdvancedSearch {
 		chrome.findElement(By.name("author")).clear();
 		chrome.findElement(By.name("author")).sendKeys(author);
 		chrome.findElement(By.xpath("/html[1]/body[1]/div[3]/div[2]/form[1]/div[3]/div[1]/button[1]")).click();
-		chrome.findElement(By.xpath("/html[1]/body[1]/div[7]/div[1]/div[1]/div[1]/div[3]/table[1]"));
 		List<WebElement> titles=chrome.findElements(By.xpath("/html[1]/body[1]/div[7]/div[1]/div[1]/div[1]/div[3]/table[1]/tbody[1]/tr/td[2]"));
 		List<WebElement> authors=chrome.findElements(By.xpath("/html[1]/body[1]/div[7]/div[1]/div[1]/div[1]/div[3]/table[1]/tbody[1]/tr/td[4]"));
 		for(int i=0;i<titles.size();i++)
 		{
-			assertTrue(titles.get(i).getText().contains(title) && authors.get(i).getText().contains(author));
+			assertTrue(titles.get(i).getText().toLowerCase().contains(title) && authors.get(i).getText().toLowerCase().contains(author));
 		}
 	}
 	@AfterTest
