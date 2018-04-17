@@ -1,5 +1,6 @@
 package main;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -44,13 +45,18 @@ public class AdvancedSearch {
 		chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/ul[1]/li[5]/a[1]")).click();
 	}
 
-	@DataProvider(name="test1")
-	public static Object[][] AdvancedSearchDataProvider()
+	@DataProvider(name="valid")
+	public static Object[][] AdvancedSearchDataProvidervalid()
 	{
 		return new Object[][] {{"computer graphics","donald hearn & pauline baker"},{"computer","donald hearn"},{"computer",""},{"","donald hearn & pauline baker"},{"",""}};
 	}
-	@Test(dataProvider="test1")
-	public void AdvancedSearchTest(String title,String author) {
+	@DataProvider(name="invalid")
+	public static Object[][] AdvancedSearchDataProviderInvalid()
+	{
+		return new Object[][] {{"ahmed","amr"},{"ahmed","donald hearn & pauline baker"},{"computer graphics","ahmed"}};
+	}
+	@Test(dataProvider="valid")
+	public void AdvancedSearchTestValid(String title,String author) {
 		WebDriverWait wait = new WebDriverWait(chrome, 2);
 		wait.until(ExpectedConditions.visibilityOf(chrome.findElement(By.name("title"))));
 		chrome.findElement(By.name("title")).clear();
@@ -64,6 +70,19 @@ public class AdvancedSearch {
 		{
 			assertTrue(titles.get(i).getText().toLowerCase().contains(title) && authors.get(i).getText().toLowerCase().contains(author));
 		}
+	}
+	
+	@Test(dataProvider="invalid")
+	public void AdvancedSearchTestInvalid(String title,String author) {
+		WebDriverWait wait = new WebDriverWait(chrome, 2);
+		wait.until(ExpectedConditions.visibilityOf(chrome.findElement(By.name("title"))));
+		chrome.findElement(By.name("title")).clear();
+		chrome.findElement(By.name("title")).sendKeys(title);
+		chrome.findElement(By.name("author")).clear();
+		chrome.findElement(By.name("author")).sendKeys(author);
+		chrome.findElement(By.xpath("/html[1]/body[1]/div[3]/div[2]/form[1]/div[3]/div[1]/button[1]")).click();
+		String xString=chrome.findElement(By.xpath("/html[1]/body[1]/div[7]/div[1]/div[1]/div[1]/div[3]/table[1]/tbody[1]/tr[1]/td[1]")).getText();
+		assertEquals(xString, "No data available in table");
 	}
 	@AfterTest
 	public void AfterAdvancedSearchTest() {

@@ -58,8 +58,8 @@ public class SearchByDate {
 	@DataProvider(name = "test2")
 	public Object[][] test2() {
 		return new Object[][] { { "2016-11-13 03:00:00", "2014-11-13 03:00:00" }, { "", "" },
-				{ "1800-11-13 03:00:00", "1900-11-13 03:00:00" }, { "", "1900-11-13 03:00:00" },
-				{ "1800-11-13 03:00:00", "" } };
+				{ "1800-11-13 03:00:00", "1900-11-13 03:00:00" }, { "", "2016-11-13 03:00:00" },
+				{ "2016-11-13 03:00:00", "" } };
 	}
 
 	@Test(dataProvider = "test1")
@@ -82,10 +82,8 @@ public class SearchByDate {
 				Date date = format.parse(DateAdded.get(i).getText());
 				Date fromdate = format.parse(from);
 				Date todate = format.parse(to);
-				System.out.println(DateAdded.get(i).getText());
 				assertTrue(date.compareTo(fromdate) >= 0 && date.compareTo(todate) <= 0);
 			} catch (ParseException e) {
-				System.out.println("7aga 8lt");
 				e.printStackTrace();
 			}
 		}
