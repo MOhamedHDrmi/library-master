@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -36,10 +37,6 @@ public class BooksPageTest {
 
 	}
 
-	@Test(enabled=true)
-	public void showAllBooks() {
-		chrome.findElement(By.cssSelector("body > div.container > div > div > div > ul > li:nth-child(1) > a")).click();
-	}
 
 	@Test(enabled = true)
 	public void showNewBooks() {
@@ -59,6 +56,11 @@ public class BooksPageTest {
 	@Test(enabled = true)
 	public void SortByTitle() {
 		chrome.findElement(By.cssSelector("#example > thead > tr > th.sorting_asc")).click();
+	}
+	
+	@Test(enabled=true)
+	public void showAllBooks() {
+		chrome.findElement(By.cssSelector("body > div.container > div > div > div > ul > li:nth-child(1) > a")).click();
 	}
 
 	@DataProvider(name = "ExistingData")
@@ -104,5 +106,9 @@ public class BooksPageTest {
 
 		Assert.assertEquals("No matching records found", out.getText());
 	}
-
+	
+	@AfterTest
+	public void afterTest() {
+		chrome.close();
+	}
 }
