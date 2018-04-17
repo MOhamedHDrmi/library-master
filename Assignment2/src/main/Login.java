@@ -1,5 +1,7 @@
 package main;
 
+import static org.testng.Assert.assertTrue;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,21 +30,37 @@ public class Login {
 		chrome.get(path);
 	}
 	
-	@DataProvider(name = "login")
-	public Object[][] cases() {
-		return new Object[][] { { "Mohamed", "password' OR 'x'='x" }, { "Mohamed", "123456" }, { "jahidd26", "000000" }, { "Mohamed", "000000" },
-				{ "", "" },{ "keya07", "123456" } };
+	@DataProvider(name = "valid")
+	public Object[][] casesvalid() {
+		return new Object[][] { { "keya07", "123456" } };
 	}
 
-	@Test(dataProvider = "login")
-	public void testCases(String[] Case) {
+	@DataProvider(name = "invalid")
+	public Object[][] casesinvalid() {
+		return new Object[][] { { "Mohamed", "password' OR 'x'='x" }, { "Mohamed", "123456" }, { "jahidd26", "000000" }, { "Mohamed", "000000" },
+				{ "", "" } };
+	}
+	
+	@Test(dataProvider = "valid")
+	public void testCasesvlaid(String[] Case) {
 		chrome.manage().window().maximize();
 		chrome.findElement(By.name("username")).clear();
 		chrome.findElement(By.name("username")).sendKeys(Case[0]);
 		chrome.findElement(By.name("password")).clear();
 		chrome.findElement(By.name("password")).sendKeys(Case[1]);
 		chrome.findElement(By.name("submit")).click();
-		chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]")).getText().equals("Welcome: User");
+		assertTrue(chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]")).getText().equals("Welcome: User"));
+	}
+	
+	@Test(dataProvider = "invalid")
+	public void testCasesinvalid(String[] Case) {
+		chrome.manage().window().maximize();
+		chrome.findElement(By.name("username")).clear();
+		chrome.findElement(By.name("username")).sendKeys(Case[0]);
+		chrome.findElement(By.name("password")).clear();
+		chrome.findElement(By.name("password")).sendKeys(Case[1]);
+		chrome.findElement(By.name("submit")).click();
+		assertTrue(chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/p[1]/strong[1]")).getText().equals("Please Put Your Username & Password"));
 	}
 	
 	@AfterTest
