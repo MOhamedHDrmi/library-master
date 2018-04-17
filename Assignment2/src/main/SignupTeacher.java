@@ -63,7 +63,7 @@ public class SignupTeacher {
 		chrome.findElement(By.name("password")).clear();
 		chrome.findElement(By.name("password")).sendKeys(Case[6]);
 		chrome.findElement(By.name("submit")).click();
-		chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/center[1]/h2[1]")).getText().equals("You are Successfully Registered. You can now login your account.");
+		assertTrue(chrome.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/center[1]/h2[1]")).getText().equals("You are Successfully Registered. You can now login your account."));
 	}
 	
 	@Test(dataProvider="invalid")
