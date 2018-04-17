@@ -1,26 +1,20 @@
 package main;
 
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class BooksPageTest {
+public class ViewBorrowedBooks_TransactionTest {
 	WebDriver chrome;
-
 	@BeforeTest
-	public void beforeBookTest() {
+	private void beforeTransactionTest() {
 		System.setProperty("webdriver.chrome.driver", "E:\\Programs\\chromedriver.exe");
 		chrome = new ChromeDriver();
 		chrome.manage().window().maximize();
@@ -31,18 +25,19 @@ public class BooksPageTest {
 		chrome.findElement(By.name("password")).clear();
 		chrome.findElement(By.name("password")).sendKeys("123456");
 		chrome.findElement(By.name("submit")).click();
-		chrome.findElement(By.cssSelector("body > div:nth-child(11) > div > div > div > ul > li:nth-child(4) > a"))
+		chrome.findElement(By.cssSelector("body > div:nth-child(11) > div > div > div > ul > li.divider-vertical.open > a"))
 				.click();
-
+		chrome.findElement(By.cssSelector("body > div:nth-child(11) > div > div > div > ul > li.divider-vertical.open > ul > li:nth-child(2) > a"))
+		.click();
 	}
 
 	@Test(enabled=true)
-	public void showAllBooks() {
+	public void showStudentBooks() {
 		chrome.findElement(By.cssSelector("body > div.container > div > div > div > ul > li:nth-child(1) > a")).click();
 	}
 
 	@Test(enabled = true)
-	public void showNewBooks() {
+	public void showTeacherBooks() {
 		chrome.findElement(By.cssSelector("body > div.container > div > div > div > ul > li:nth-child(2) > a")).click();
 	}
 
@@ -87,7 +82,9 @@ public class BooksPageTest {
 				break;
 		}
 
-		Assert.assertTrue(isFound);
+		String message = "succes";
+		Assert.assertTrue(isFound, message);
+		System.out.println(message);
 	}
 
 	@DataProvider(name = "NotExistingData")
