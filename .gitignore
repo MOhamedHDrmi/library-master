@@ -221,3 +221,12 @@ Assignment2/.idea/workspace.xml
 dbcon.php
 member/dbcon.php
 member/dbcon.php
+*.png
+*.gif
+*.html
+*.xml
+*.js
+*.properties
+*.css
+*.php
+Assignment2/src/main/App.java
