@@ -129,8 +129,7 @@ public class ViewBorrowedBooks_TransactionTest {
 		chrome.findElement(By.xpath("//div[@id='myModal3']//div[@class='modal-body']//form[@class='form-horizontal']//div[@class='control-group']//div[@class='controls']//input[@id='inputPassword']")).clear();
 		chrome.findElement(By.xpath("//div[@id='myModal3']//div[@class='modal-body']//form[@class='form-horizontal']//div[@class='control-group']//div[@class='controls']//input[@id='inputPassword']")).sendKeys(to);
 		chrome.findElement(By.xpath("//*[@id=\"myModal3\"]/div[2]/form/div[3]/div/button")).click();
-		List<WebElement> DateAdded = chrome.findElements(
-				By.xpath("//*[@id=\"example\"]/tbody/tr/td[6]"));
+		List<WebElement> DateAdded = chrome.findElements(By.xpath("//*[@id=\"example\"]/tbody/tr/td[6]"));
 		for (int i = 0; i < DateAdded.size(); i++) {
 			DateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			if (from.matches("\\d+-\\d+-\\d+")) {
@@ -147,7 +146,6 @@ public class ViewBorrowedBooks_TransactionTest {
 				e.printStackTrace();
 			}
 		}
-		chrome.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 	}
 
 	@Test(dataProvider = "notExistingData_date")
@@ -164,7 +162,6 @@ public class ViewBorrowedBooks_TransactionTest {
 		WebElement noData = chrome.findElement(
 				By.xpath("//*[@id=\"example\"]/tbody/tr/td"));
 		Assert.assertEquals(noData.getText(), "No data available in table");
-		chrome.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 
 	}
 	@AfterTest

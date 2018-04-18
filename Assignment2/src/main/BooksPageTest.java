@@ -91,7 +91,7 @@ public class BooksPageTest {
 
 		Assert.assertTrue(isFound);
 	}
-
+/*
 	@DataProvider(name = "NotExistingData")
 	public static Object[] getSearchBooks_NotExistingData() {
 		String[] s = { "blabalbal" };
@@ -110,5 +110,5 @@ public class BooksPageTest {
 	@AfterTest
 	public void afterTest() {
 		chrome.close();
-	}
+	}*/
 }
